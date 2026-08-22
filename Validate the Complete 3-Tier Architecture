@@ -1,0 +1,45 @@
+Configure Nginx Reverse Proxy
+Step 1: Edit the Nginx Configuration
+Open the Nginx configuration file:
+    sudo nano /etc/nginx/nginx.conf
+
+Replace the existing configuration or update the appropriate `server` block with the reverse proxy configuration.
+Ensure the configuration includes the frontend web content and the reverse proxy settings for the `/api/` endpoint.
+
+Step 2: Save the Configuration
+After making the changes:
+
+Press `CTRL + X`
+Press `Y`
+Press `ENTER`
+
+to save and exit the editor.
+
+Step 3: Validate the Nginx Configuration
+Test the configuration for syntax errors:
+    sudo nginx -t
+
+Expected Output
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+Step 4: Restart Nginx
+Apply the new configuration:
+  sudo systemctl restart nginx
+Verify that Nginx is running:
+  sudo systemctl status nginx
+
+Expected Output
+Active: active (running)
+
+Troubleshooting
+
+View Nginx logs:
+ sudo tail -f /var/log/nginx/error.log
+Check service status:
+  sudo systemctl status nginx
+Reload configuration without restarting:
+  sudo nginx -s reload
+
+Retest configuration:
+    sudo nginx -t
