@@ -1,0 +1,56 @@
+Navigate to your cloned GitHub project directory:
+Bash
+cd /path/to/your/cloned-repo
+Review proxy.md and Update nginx.conf
+View the contents of proxy.md to confirm the specific routing directives provided for your setup:
+
+Bash
+cat proxy.md
+
+Open the provided nginx.conf file in a text editor:
+
+Bash
+nano nginx.conf
+
+Locate the location /api/ (or location /) block. Update the proxy_pass directive with your Internal ALB DNS Name:
+
+Nginx
+location /api/ {
+    proxy_pass http://<YOUR-INTERNAL-ALB-DNS-NAME>/;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+
+Replace the Default Nginx Configuration
+Create a backup of your original default Nginx configuration file:
+
+Bash
+sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+
+
+Copy your newly edited nginx.conf from your project folder to /etc/nginx/:
+
+Bash
+sudo cp nginx.conf /etc/nginx/nginx.conf
+
+
+Test and Restart Nginx1.Test Nginx Configuration Syntax:
+Run the syntax check command to ensure there are no formatting errors:
+  
+Bash
+sudo nginx -t
+
+Restart Nginx Service:
+Apply your updated configuration by restarting the Nginx daemon:
+Bash
+  sudo systemctl restart nginx
+
+Verify Nginx Status 
+  Bash
+sudo systemctl status nginx
+
+Verify Web Tier to Application Tier Communication
+On your Web Tier EC2 instance, execute a curl test to verify local reverse proxy routing through Nginx:
+
+Bash
+curl -I http://localhost/api/
