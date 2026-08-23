@@ -1,0 +1,55 @@
+
+            yum update -y
+            yum install -y httpd
+            systemctl start httpd
+            systemctl enable httpd
+
+import MySQl
+
+
+
+CREATE TABLE
+cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        email TEXT UNIQUE NOT NULL,
+        age INTEGER
+    )
+""")
+conn.commit()
+
+
+ CREATE (Insert Data using parameterized queries to prevent SQL injection)
+def add_user(name: str, email: str, age: int):
+    try:
+        cursor.execute(
+            "INSERT INTO users (name, email, age) VALUES (?, ?, ?)",
+            (name, email, age),
+        )
+        conn.commit()
+        print(f"User '{name}' added successfully.")
+    except sqlite3.IntegrityError:
+        print(f"Error: A user with email '{email}' already exists.")
+
+
+def get_all_users():
+    cursor.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    print("\n--- Current Users ---")
+    for user in users:
+        print(f"ID: {user[0]} | Name: {user[1]} | Email: {user[2]} | Age: {user[3]}")
+    print("---------------------\n")
+
+
+
+
+     Insert users
+    add_user("Alice Smith", "alice@example.com", 28)
+    add_user("Bob Jones", "bob@example.com", 34)
+
+ 
+    Update record
+    update_user_email(1, "alice.smith@newdomain.com")
+
+  
